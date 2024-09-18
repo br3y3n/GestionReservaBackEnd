@@ -13,7 +13,12 @@ export const register = async(req, res) => {
             message: "Error, ya existe"
         });
 
-        const user = await UserModel(data);
+        const newUser = {
+            ...data,
+            tipoUsuario: "Usuario"
+        }
+
+        const user = await UserModel(newUser);
 
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(data.password, salt);

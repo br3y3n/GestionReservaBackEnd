@@ -14,6 +14,11 @@ const userSchema = await mongoose.Schema({
     password: {
         type:String,
         require:true
+    },
+    tipoUsuario: {
+        type:String,
+        require:true,
+        enum: ["Administrador", "Usuario"]
     }
 });
 
