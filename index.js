@@ -9,16 +9,16 @@ import morgan from 'morgan'
 
 const app = express()
 app.use(express.json())
-app.use(cookieParser())
 app.use(morgan("dev"))
 
 app.use(cors({
     origin: ["http://localhost:5173"],
     methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
     credentials: true,
-    allowedHeaders: ['Content-Types', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     optionsSuccessStatus: 200,
 }));
+app.use(cookieParser())
 
 config()
 dbConnection()

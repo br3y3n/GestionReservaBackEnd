@@ -60,7 +60,7 @@ export const login = async(req, res) => {
                     error: error.message,
                 });
 
-                res.cookie("token", "", {
+                res.cookie("token", token, {
                     secure: true,
                     sameSites: "none",
                     httpOnly: false
@@ -82,13 +82,12 @@ export const login = async(req, res) => {
     }
 }
 
-
 export const verifyToken = async(req, res) => {
 
     const { token } = req.cookies;
 
     try {
-
+        
         if (!token) return res.status(404).json({
             message: "No hay cookies activas",
         });
@@ -116,6 +115,25 @@ export const verifyToken = async(req, res) => {
     } catch (error) {
         res.status(500).json({
             message: "Error al verificar el token.",
+            error: error.message,
+        });
+    }
+}
+
+export const logout = async(req, res) => {
+    try {
+        
+        res.cookie("token", "", {
+            expires: new Date(0),
+        });
+
+        return res.status(200).json({
+            message: "Sesion cerrada",
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Error al cerrar la sesión.",
             error: error.message,
         });
     }
