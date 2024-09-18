@@ -1,59 +1,54 @@
-import Lugar from "../models/lugares.js"
+import Lugares from "../models/lugares.js"
 
 
-export const  createLugar =async(req,res)=>{
+export const createLugar = async (req, res) => {
     try {
-        const data = req.body
-        console.log(data)
-        const lugar = await Lugar.create(data)
-        if(lugar){
-            res.status(201).json({
-                msg:'lugar creado correctamente',
-                lugar
-            })
-        }
-        res.status(401).json({msg:'Ocurrio un error'})
+      const { nombre, descripcion, direccion } = req.body;
+      const nuevoLugar = await Lugares.create({
+        nombre,
+        descripcion,
+        direccion
+      });
+  
+      return res.status(201).json({ message: 'Lugar creado con éxito', lugar: nuevoLugar });
     } catch (error) {
-        res.status(401).json({
-            msg:'Error interno del servidos',
-            error
-        })
-        console.log(error)
+      console.error('Error al crear el lugar:', error);
+      return res.status(500).json({ message: 'Error al crear el lugar' });
     }
-}
-
-
-
-export const getLugarById = async (req, res) => {
+  };
+  
+  export const getLugarById = async (req, res) => {
+    const { id } = req.params;
+  
     try {
-      const { id } = req.params;
-      const user = await Lugar.findByPk(id); 
+      const lugar = await Lugares.findById(id);
   
-      if (!user) {
-        return res.status(404).json({ message: 'lugar no encontrado' });
+      if (lugar) {
+        return res.status(200).json({ lugar });
+      } else {
+        return res.status(404).json({ message: 'Lugar no encontrado' });
       }
-  
-      return res.status(200).json({user});
     } catch (error) {
-      console.error(error);
+      console.error('Error al obtener el lugar por ID:', error);
       return res.status(500).json({ message: 'Error al obtener el lugar' });
     }
   };
+  
 
 
   export const getAllLugar = async (req, res) => {
     try {
-      const lugares = await Lugar.find();
-        console.log(lugares)
-      if (lugares) {
+      const lugares = await Lugares.find();
+  
+      if (lugares && lugares.length > 0) {
         return res.status(200).json({ lugares });
       } else {
-
         return res.status(404).json({ message: 'No se encontraron lugares' });
       }
     } catch (error) {
-      console.error(error);
+      console.error('Error al obtener los lugares:', error);
       return res.status(500).json({ message: 'Error al obtener los lugares' });
     }
   };
+  
   

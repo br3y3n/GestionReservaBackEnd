@@ -4,6 +4,8 @@ import { config } from 'dotenv'
 import { dbConnection } from './src/DB/dbConnection.js'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
+import routerReserva from './src/routes/reserva.js'
+
 
 
 const app = express()
@@ -26,6 +28,7 @@ dbConnection()
 
 import routerLugares from './src/routes/lugares.js'
 app.use('/lugares', routerLugares)
+app.use('/reserva', routerReserva)
 
 import authRouter from './src/routes/auth.routes.js';
 app.use("/api", authRouter);
