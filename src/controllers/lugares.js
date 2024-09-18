@@ -43,7 +43,7 @@ export const getLugarById = async (req, res) => {
 
   export const getAllLugar = async (req, res) => {
     try {
-      const lugares = await Lugar.findAll();
+      const lugares = await Lugar.find();
         console.log(lugares)
       if (lugares) {
         return res.status(200).json({ lugares });
