@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 
 export const connetion =async ()=>{
-    const sequelize = new Sequelize('gestion_reserva', 'root', '1234', {
+    const sequelize = new Sequelize('gestion_reserva', 'root', '12', {
         host: '127.0.0.1',
         dialect: "mysql"
       });
