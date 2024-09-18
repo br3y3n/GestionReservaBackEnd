@@ -34,7 +34,7 @@ export const createReserva = async (req, res) => {
     const { id } = req.params;
   
     try {
-      const reserva = await Reserva.findOne({usuario:id}).populate('usuario').populate('lugar');
+      const reserva = await Reserva.find({usuario:id}).populate('usuario').populate('lugar');
   
       if (reserva) {
         return res.status(200).json({ reserva });
