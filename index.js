@@ -3,8 +3,10 @@ import cors from "cors"
 import { config } from 'dotenv'
 import { dbConnection } from './src/DB/dbConnection.js'
 import cookieParser from 'cookie-parser'
-import morgan from 'morgan'
 import routerReserva from './src/routes/reserva.js'
+import routerReserva from './src/routes/reserva.js'
+import cookieParser from 'cookie-parser'
+import morgan from 'morgan'
 
 
 
@@ -17,7 +19,7 @@ app.use(cors({
     origin: ["http://localhost:5173"],
     methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
     credentials: true,
-    allowedHeaders: ['Content-Types', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     optionsSuccessStatus: 200,
 }));
 
