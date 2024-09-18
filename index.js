@@ -2,8 +2,6 @@ import express from 'express'
 import cors from "cors"
 import { config } from 'dotenv'
 import { dbConnection } from './src/DB/dbConnection.js'
-import cookieParser from 'cookie-parser'
-import routerReserva from './src/routes/reserva.js'
 import routerReserva from './src/routes/reserva.js'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
