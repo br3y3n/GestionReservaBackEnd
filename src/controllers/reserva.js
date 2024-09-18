@@ -2,10 +2,13 @@ import Reserva from "../models/reserva.js";
 export const createReserva = async (req, res) => {
     try {
       const data = req.body;
-      console.log(data)
-      const nuevoLugar = await Reserva.create(data);
+ 
+      const reservas = await Reserva.find({ lugar: data.lugar });
+      console.log(reservas);
+      if (reservas){
+        console.log(true);
+        }
   
-      return res.status(201).json({ message: 'reserva creada con éxito', lugar: nuevoLugar });
     } catch (error) {
       console.error('Error al crear el reserva:', error);
       return res.status(500).json({ message: 'Error al crear el reserva' });
