@@ -12,7 +12,7 @@ export const  createLugar =async(req,res)=>{
                 lugar
             })
         }
-        res.status(401).json('Ocurrio un error')
+        res.status(401).json({msg:'Ocurrio un error'})
     } catch (error) {
         res.status(401).json({
             msg:'Error interno del servidos',
@@ -33,7 +33,7 @@ export const getLugarById = async (req, res) => {
         return res.status(404).json({ message: 'lugar no encontrado' });
       }
   
-      return res.status(200).json(user);
+      return res.status(200).json({user});
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Error al obtener el lugar' });
@@ -41,13 +41,19 @@ export const getLugarById = async (req, res) => {
   };
 
 
-export const getAllLugar =async()=>{
+  export const getAllLugar = async (req, res) => {
     try {
-        const lugares = await Lugar.findAll()
-        if(lugares){
-            res.status(200).json(lugares)
-        }
+      const lugares = await Lugar.findAll();
+        console.log(lugares)
+      if (lugares) {
+        return res.status(200).json({ lugares });
+      } else {
+
+        return res.status(404).json({ message: 'No se encontraron lugares' });
+      }
     } catch (error) {
-        console.log(error)
+      console.error(error);
+      return res.status(500).json({ message: 'Error al obtener los lugares' });
     }
-}
+  };
+  

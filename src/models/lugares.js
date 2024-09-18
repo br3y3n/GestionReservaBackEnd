@@ -1,43 +1,29 @@
-import { Sequelize, DataTypes } from 'sequelize'
+import mongoose from "mongoose";
 
-const sequelize = new Sequelize('sqlite::memory:');
+const schemaLugar =mongoose.Schema(
+{
 
-const Lugar = sequelize.define(
-    'Lugar',
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
       nombre: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type:String,
+        require:true,
+        trim:true
       },
       descripcion: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type:String,
+        require:true,
+        trim:true
       },
       direccion: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type:String,
+        require:true,
+        trim:true
       },
     },
     {
-      timestamps: true,
-      modelName: 'Lugar',
-      tableName: 'Lugares',
-    },
-  );
-  
-  (async () => {
-    try {
-      await sequelize.sync({ force: true });  // Forzar la creación de la tabla
-      console.log('Tabla Lugares creada exitosamente');
-    } catch (error) {
-      console.error('Error al crear la tabla:', error);
+        timestamps:true
     }
-  })();
-  
+)
 
-export default Lugar
+const Lugares = mongoose.model('lugares', schemaLugar)
+
+export default Lugares
