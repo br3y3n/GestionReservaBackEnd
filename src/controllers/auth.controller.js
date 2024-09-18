@@ -26,7 +26,7 @@ export const register = async(req, res) => {
         });
 
     } catch (error) {
-        res.status().json({
+        res.status(500).json({
             message: "Error al registrar",
             error: error.message,
         });
@@ -49,31 +49,73 @@ export const login = async(req, res) => {
             message: "Credenciales incorrectas."
         });
 
-
         jwt.sign(
-            { id: foundUser._id },
+            { _id: foundUser._id },
             process.env.JWT_SECRET,
-            { expiresIn: "2hr" },
+            { expiresIn: "1hr" },
             (error, token) => {
 
                 if (error) return res.status(400).json({
-
+                    message: "Error al generar el token.",
+                    error: error.message,
                 });
+
+                res.cookie("token", "", {
+                    secure: true,
+                    sameSites: "none",
+                    httpOnly: false
+                });
+
+                return res.status(200).json({
+                    message: "Inicio de sesión correcto.",
+                    data: { token, user: foundUser },
+                });
+
             }
-        )
-
-
-        res.status(200).json({
-            message: "Inicio de sesión correcto.",
-            data: comparePassword,
-        });
-
-
-
+        );
         
     } catch (error) {
-        res.status().json({
+        res.status(500).json({
             message: "Error al iniciar sesion",
+            error: error.message,
+        });
+    }
+}
+
+
+export const verifyToken = async(req, res) => {
+
+    const { token } = req.cookies;
+
+    try {
+
+        if (!token) return res.status(404).json({
+            message: "No hay cookies activas",
+        });
+
+        jwt.verify(token, process.env.JWT_SECRET, async(error, user) => {
+
+            if(error) return res.status(400).json({
+                message: "Error al verificar el token.",
+                error: error.message
+            });
+
+            const foundUser = await UserModel.findById(user._id);
+
+            if(!foundUser) return res.status(404).json({
+                message: "Usuario no encontrado."
+            });
+
+            return res.status(200).json({
+                user: foundUser,
+            });
+
+        });
+    
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Error al verificar el token.",
             error: error.message,
         });
     }
