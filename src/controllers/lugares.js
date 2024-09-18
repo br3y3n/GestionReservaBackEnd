@@ -41,7 +41,7 @@ export const getLugarById = async (req, res) => {
   };
 
 
-export const getAllLugar =async()=>{
+export const getAllLugar =async(req,res)=>{
     try {
         const lugares = await Lugar.findAll()
         if(lugares){

@@ -32,7 +32,7 @@ const Lugar = sequelize.define(
   
   (async () => {
     try {
-      await sequelize.sync({ force: true });  // Forzar la creación de la tabla
+      await sequelize.sync({ force: true });
       console.log('Tabla Lugares creada exitosamente');
     } catch (error) {
       console.error('Error al crear la tabla:', error);
