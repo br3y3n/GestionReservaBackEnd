@@ -2,11 +2,24 @@ import express from 'express'
 import cors from "cors"
 import { config } from 'dotenv'
 import { dbConnection } from './src/DB/dbConnection.js'
+import cookieParser from 'cookie-parser'
+import morgan from 'morgan'
 
 
 
 const app = express()
 app.use(express.json())
+app.use(cookieParser())
+app.use(morgan("dev"))
+
+app.use(cors({
+    origin: ["http://localhost:5173"],
+    methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
+    credentials: true,
+    allowedHeaders: ['Content-Types', 'Authorization'],
+    optionsSuccessStatus: 200,
+}));
+
 config()
 dbConnection()
 
