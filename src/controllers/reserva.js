@@ -4,7 +4,6 @@ export const createReserva = async (req, res) => {
       const data = req.body;
       console.log(data)
       const nuevoLugar = await Reserva.create(data);
-  
       return res.status(201).json({ message: 'reserva creada con éxito', lugar: nuevoLugar });
     } catch (error) {
       console.error('Error al crear el reserva:', error);
@@ -54,7 +53,7 @@ export const createReserva = async (req, res) => {
       const reserva = await Reserva.find().populate('usuario').populate('lugar');
   
       if (reserva) {
-        return res.status(200).json(reserva);
+        return res.status(200).json({ reserva });
       } else {
         return res.status(404).json({ message: 'No se encontraron reserva' });
       }
